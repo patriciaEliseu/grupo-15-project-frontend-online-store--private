@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import * as api from '../services/api';
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      categories: [],
+    };
+  }
+
+  componentDidMount() {
+    this.apiGetCategories();
+  }
+
+  apiGetCategories = async () => {
+    const apiGetCategories = await api.getCategories();
+    this.setState({ categories: apiGetCategories });
+  }
+
   render() {
+    const { categories } = this.state;
+    // console.log(categories);
     return (
       <div>
         <h4 data-testid="home-initial-message">
@@ -18,6 +37,20 @@ class Home extends Component {
             alt="carrinho-de-compras"
           />
         </Link>
+
+        {categories.map(({ id, name }) => (
+          <div key={ id }>
+            <label htmlFor={ id } data-testid="category">
+              <input
+                id={ id }
+                name="category"
+                value={ name }
+                type="radio"
+              />
+              {name}
+            </label>
+          </div>
+        ))}
       </div>
     );
   }
