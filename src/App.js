@@ -1,7 +1,9 @@
 import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
 import * as api from './services/api';
 import './App.css';
+import Home from '../src/Pages/Home';
 
 class App extends React.Component {
   constructor() {
@@ -25,9 +27,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        Trabalho
-      </div>
+      <BrowserRouter>
+      <Switch>
+      <Route path="/" exact>
+        <Home />
+      </Route>
+      </Switch>
+      </BrowserRouter>
     );
   }
 }
