@@ -21,7 +21,6 @@ class Home extends Component {
 
   render() {
     const { categories } = this.state;
-    // console.log(categories);
     return (
       <div>
         <h4 data-testid="home-initial-message">
