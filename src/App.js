@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
 import * as api from './services/api';
 import './App.css';
-import Home from '../src/Pages/Home';
+import Home from './Pages/Home';
 
 class App extends React.Component {
   constructor() {
@@ -28,11 +28,11 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-      <Switch>
-      <Route path="/" exact>
-        <Home />
-      </Route>
-      </Switch>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+        </Switch>
       </BrowserRouter>
     );
   }
