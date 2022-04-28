@@ -9,7 +9,7 @@ class CardProdutos extends Component {
     return (
       <div data-testid="product" key={ keyNumber }>
         <h4>
-          { title}
+          { title }
         </h4>
         <img
           src={ thumbnail }
