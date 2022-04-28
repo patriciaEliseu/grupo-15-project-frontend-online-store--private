@@ -38,8 +38,8 @@ class Home extends Component {
   getPesquisar = async (event) => {
     event.preventDefault();
     // title,thumbnail, price
-    const { inputName } = this.state; // já chega modificado aqui
-    const produtos = await api.getProductsFromCategoryAndQuery('', inputName);
+    const { inputName } = this.state; // já chega modificado aqui.
+    const produtos = await api.getProductsByQuery(inputName);
     const { results } = produtos;
     this.setState({
       produtosInput: results,
@@ -53,24 +53,30 @@ class Home extends Component {
 
   render() {
     const { categories, inputName, produtosInput } = this.state;
-    console.log(produtosInput);
+    // console.log(produtosInput);
     return (
       <div>
         <h4 data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </h4>
-        <form data-testid="query-button" onSubmit={ this.getPesquisar }>
-          <label htmlFor="input">
-            Pesquisar
-            <input
-              onChange={ this.getValorInput }
-              data-testid="query-input"
-              name="inputName"
-              type="text"
-              value={ inputName }
-            />
-          </label>
-        </form>
+        <label htmlFor="input">
+          Pesquisar
+          <input
+            onChange={ this.getValorInput }
+            data-testid="query-input"
+            name="inputName"
+            type="text"
+            value={ inputName }
+          />
+        </label>
+        <button
+          type="submit"
+          data-testid="query-button"
+          onClick={ this.getPesquisar }
+        >
+          Pesquisar
+        </button>
+
         <Link
           to="/shoppingcart"
           data-testid="shopping-cart-button"
