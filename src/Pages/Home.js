@@ -24,6 +24,7 @@ class Home extends Component {
 
   getValorInput = ({ target }) => {
     const { name, value } = target;
+    console.log(target);
     this.setState({ [name]: value }, () => {
       this.setState({
         inputName: value,
@@ -96,6 +97,7 @@ class Home extends Component {
                 name="category"
                 value={ name }
                 type="radio"
+                onClick={ this.getValorInput }
               />
               {name}
             </label>
