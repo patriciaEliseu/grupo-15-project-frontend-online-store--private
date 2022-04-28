@@ -8,59 +8,32 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      categories: [],
       inputName: '',
       produtosInput: [],
-      inputCategory: '',
     };
   }
 
-  componentDidMount() {
-    this.apiGetCategories();
+  getPesquisar = async () => {
+    const { inputName } = this.state;
+    const products = await api.getProductsByQuery(inputName);
+    this.setState({ produtosInput: products.results });
   }
 
-  apiGetCategories = async () => {
-    const apiGetCategories = await api.getCategories();
-    this.setState({ categories: apiGetCategories });
+  handleCategory = async (categoryId) => {
+    const products = await api.getProductsByCategory(categoryId);
+    this.setState({ produtosInput: products.results });
   }
 
-  getValorInput = async ({ target }) => {
-    const { value, id } = target;
-    this.setState({ inputCategory: id });
-    this.setState({ inputName: value }, () => {
-      this.setState({
-        inputName: value,
-      });
-      /* const { inputName } = this.state;
-    console.log(inputName.length > 2); */
-    });
-    const { inputCategory } = this.state;
-    const categorias = await api.getProductsByCategory(inputCategory);
-    this.setState({ productArray: categorias.results });
-  }
-
-  getPesquisar = async (event) => {
-    event.preventDefault();
-    // title,thumbnail, price
-    const { inputName } = this.state; // já chega modificado aqui.
-    const produtos = await api.getProductsByQuery(inputName);
-    const { results } = produtos;
-    this.setState({
-      produtosInput: results,
-    });
-    /*  const { produtosInput } = this.state;
-    console.log(produtosInput); */
-
-    /* console.log(inputName);
-    console.log(' teste func ok!'); */
+  getValorInput = ({ target }) => {
+    const { value } = target;
+    this.setState({ inputName: value });
   }
 
   render() {
-    const { categories, inputName, produtosInput, inputCategory, productArray } = this.state;
-    console.log(inputCategory);
-    console.log(productArray);
-    // console.log(produtosInput);
-    // Hello World
+    const {
+      inputName,
+      produtosInput,
+    } = this.state;
     return (
       <div>
         <h4 data-testid="home-initial-message">
@@ -95,22 +68,7 @@ class Home extends Component {
           />
         </Link>
 
-        {categories.map(({ id, name }) => (
-          <div key={ id }>
-            <label htmlFor={ id } data-testid="category">
-              <input
-                id={ id }
-                name="inputCategory"
-                value={ name }
-                type="radio"
-                onClick={ this.getValorInput }
-              />
-              {name}
-            </label>
-          </div>
-        ))}
-
-        <Category handle={ this.handleCategory } />
+        <Category handleCategory={ this.handleCategory } />
 
         {// title,thumbnail, price
           produtosInput.length === 0
