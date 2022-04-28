@@ -34,7 +34,7 @@ class Category extends Component {
         <form>
           {category.map(({ id, name }) => (
             <div key={ id }>
-              <label htmlFor="category">
+              <label htmlFor={ id }>
                 <input
                   id={ id }
                   type="radio"
