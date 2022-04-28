@@ -34,15 +34,15 @@ class Category extends Component {
         <form>
           {category.map(({ id, name }) => (
             <div key={ id }>
-              <input
-                id={ id }
-                type="radio"
-                value={ name }
-                onChange={ this.handleCategory }
-                name="category"
-                data-testid="category"
-              />
               <label htmlFor="category">
+                <input
+                  id={ id }
+                  type="radio"
+                  value={ name }
+                  onChange={ this.handleCategory }
+                  name="category"
+                  data-testid="category"
+                />
                 {name}
               </label>
             </div>
