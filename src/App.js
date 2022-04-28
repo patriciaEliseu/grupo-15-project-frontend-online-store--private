@@ -14,18 +14,6 @@ class App extends React.Component {
     };
   }
 
-  //= > { console.log(categories); })
-  componentDidMount() {
-    api.getCategories().then((categories) => { console.log(categories); });
-  }
-
-  /*  recebeAPI = async () => {
-    const api = await getCategories();
-    this.setState({
-      fetchAPI: api,
-    });
-  } */
-
   render() {
     return (
       <BrowserRouter>

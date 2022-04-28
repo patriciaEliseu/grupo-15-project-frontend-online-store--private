@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as api from '../services/api';
 import CardProdutos from './CardProdutos';
+import Category from '../components/Category';
 
 class Home extends Component {
   constructor() {
@@ -22,18 +23,25 @@ class Home extends Component {
     this.setState({ categories: apiGetCategories });
   }
 
+  getCategoria = async ({ target }) => {
+    const { id } = target;
+    // this.setState({ inputCategory: id });
+    const categoria = await api.getProductsByCategory(id);
+    const { results } = categoria;
+    this.setState({
+      produtosInput: results,
+    });
+    console.log(categoria);
+  }
+
   getValorInput = ({ target }) => {
-    const { name, value } = target;
-    console.log(target);
+    const { value, name } = target;
+    // this.setState({ inputCategory: id });
     this.setState({ [name]: value }, () => {
       this.setState({
         inputName: value,
       });
-      /* const { inputName } = this.state;
-    console.log(inputName.length > 2); */
     });
-    /* const { inputName } = this.state;
-    console.log(inputName.length > 2); */
   }
 
   getPesquisar = async (event) => {
@@ -45,16 +53,12 @@ class Home extends Component {
     this.setState({
       produtosInput: results,
     });
-    /*  const { produtosInput } = this.state;
-    console.log(produtosInput); */
-
-    /* console.log(inputName);
-    console.log(' teste func ok!'); */
   }
 
   render() {
     const { categories, inputName, produtosInput } = this.state;
-    // console.log(produtosInput);
+
+    // Hello World
     return (
       <div>
         <h4 data-testid="home-initial-message">
@@ -94,17 +98,21 @@ class Home extends Component {
             <label htmlFor={ id } data-testid="category">
               <input
                 id={ id }
-                name="category"
+                name="inputCategory"
                 value={ name }
                 type="radio"
-                onClick={ this.getValorInput }
+                onClick={ this.getCategoria }
               />
               {name}
             </label>
           </div>
         ))}
+
+        <Category handle={ this.handleCategory } />
+
         {// title,thumbnail, price
-          produtosInput.length === 0 ? <div> Nenhum produto foi encontrado </div>
+          produtosInput.length === 0
+            ? <div> Nenhum produto foi encontrado </div>
             : produtosInput.map(({ title, thumbnail, price, id }, index) => (
 
               <CardProdutos
