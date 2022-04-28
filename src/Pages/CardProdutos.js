@@ -31,4 +31,3 @@ CardProdutos.propTypes = {
 
 }.isRequired;
 export default CardProdutos;
-// title, thumbnail, price, keyNumber
