@@ -13,17 +13,20 @@ class Home extends Component {
     };
   }
 
+  // pesquisa pelo nome na api
   getPesquisar = async () => {
     const { inputName } = this.state;
     const products = await api.getProductsByQuery(inputName);
-    this.setState({ produtosInput: products.results });
+    this.setState({ produtosInput: products.results }); // armazena o que foi pesquisado no estado
   }
 
+  // pesquisa pelo ID as categorias já disponibilizadas na tela
   handleCategory = async (categoryId) => {
     const products = await api.getProductsByCategory(categoryId);
     this.setState({ produtosInput: products.results });
   }
 
+  // pega o valor do input que o usuário digita para pesquisar na função getPesquisar
   getValorInput = ({ target }) => {
     const { value } = target;
     this.setState({ inputName: value });
