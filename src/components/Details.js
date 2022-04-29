@@ -6,7 +6,11 @@ class Details extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      produtosInput: [],
+      title: '',
+      thumbnail: '',
+      price: '',
+      attributes: [],
+
     };
   }
 
@@ -17,22 +21,17 @@ class Details extends React.Component {
   handleCategory = async () => {
     const { match: { params: { id } } } = this.props;
     const products = await api.getProductsByProduct(id);
-    this.setState({ produtosInput: products });
+    const { title, thumbnail, price, attributes } = products;
+    this.setState({
+      title,
+      thumbnail,
+      price,
+      attributes,
+    });
   }
 
   render() {
-    const { produtosInput } = this.state;
-    const { title, thumbnail, price, attributes } = produtosInput;
-    const test = [];
-    // const teste = [attributes];
-    // console.log(attributes);
-    // const { params } = match;
-    // console.log(match);
-
-    attributes.forEach((element) => {
-      test.push(element);
-    });
-    console.log(test);
+    const { title, thumbnail, price, attributes } = this.state;
 
     return (
       <div data-testid="product-detail-name">
@@ -45,6 +44,23 @@ class Details extends React.Component {
         />
         <div>
           {price}
+        </div>
+        <div>
+          <ul>
+            Especificações Técnicas
+            {
+              attributes.map((element, index) => (
+
+                <li key={ index }>
+                  {element.name}
+                  :
+                  {' '}
+                  {element.value_name}
+                </li>
+
+              ))
+            }
+          </ul>
         </div>
       </div>
     );
