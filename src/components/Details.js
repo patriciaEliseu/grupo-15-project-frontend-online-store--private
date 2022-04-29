@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as api from '../services/api';
-import CardProdutos from '../Pages/CardProdutos';
 
 class Details extends React.Component {
   constructor(props) {
@@ -23,16 +22,30 @@ class Details extends React.Component {
 
   render() {
     const { produtosInput } = this.state;
-    console.log('render', produtosInput);
+    const { title, thumbnail, price, attributes } = produtosInput;
+    const test = [];
+    // const teste = [attributes];
+    // console.log(attributes);
     // const { params } = match;
     // console.log(match);
+
+    attributes.forEach((element) => {
+      test.push(element);
+    });
+    console.log(test);
+
     return (
-      <div>
-        {produtosInput.map(({ title }, index) => (
-          <div key={ index }>
-            <p>{title}</p>
-          </div>
-        ))}
+      <div data-testid="product-detail-name">
+        <h4>
+          {title}
+        </h4>
+        <img
+          src={ thumbnail }
+          alt="Imagem-do-Produto"
+        />
+        <div>
+          {price}
+        </div>
       </div>
     );
   }
@@ -44,3 +57,13 @@ Details.propTypes = {
   keyNumber: PropTypes.number,
 }.isRequired;
 export default Details;
+/* <ul>
+                Especificações técnicas:
+
+                <li>
+                  { elemento.name }
+                  ,
+                  {' '}
+                  {elemento.value_name}
+                </li>
+              </ul> */
