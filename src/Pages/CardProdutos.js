@@ -13,7 +13,7 @@ class CardProdutos extends Component {
           {title}
         </h4>
         <Link
-          to="/details"
+          to={ `/details/${keyNumber}` }
           data-testid="product-detail-link"
         >
           <img

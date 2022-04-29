@@ -93,13 +93,3 @@ class Home extends Component {
 }
 
 export default Home;
-/* {
-          produtosInput.map((elemento) => (
-            <div key={ elemento }>
-              {
-                elemento
-              }
-
-            </div>
-          ))
-        } */
