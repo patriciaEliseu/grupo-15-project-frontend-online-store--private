@@ -8,57 +8,32 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      categories: [],
       inputName: '',
       produtosInput: [],
     };
   }
 
-  componentDidMount() {
-    this.apiGetCategories();
+  getPesquisar = async () => {
+    const { inputName } = this.state;
+    const products = await api.getProductsByQuery(inputName);
+    this.setState({ produtosInput: products.results });
   }
 
-  apiGetCategories = async () => {
-    const apiGetCategories = await api.getCategories();
-    this.setState({ categories: apiGetCategories });
-  }
-
-  getCategoria = async ({ target }) => {
-    const { id } = target;
-    // this.setState({ inputCategory: id });
-    const categoria = await api.getProductsByCategory(id);
-    const { results } = categoria;
-    this.setState({
-      produtosInput: results,
-    });
-    console.log(categoria);
+  handleCategory = async (categoryId) => {
+    const products = await api.getProductsByCategory(categoryId);
+    this.setState({ produtosInput: products.results });
   }
 
   getValorInput = ({ target }) => {
-    const { value, name } = target;
-    // this.setState({ inputCategory: id });
-    this.setState({ [name]: value }, () => {
-      this.setState({
-        inputName: value,
-      });
-    });
-  }
-
-  getPesquisar = async (event) => {
-    event.preventDefault();
-    // title,thumbnail, price
-    const { inputName } = this.state; // já chega modificado aqui.
-    const produtos = await api.getProductsByQuery(inputName);
-    const { results } = produtos;
-    this.setState({
-      produtosInput: results,
-    });
+    const { value } = target;
+    this.setState({ inputName: value });
   }
 
   render() {
-    const { categories, inputName, produtosInput } = this.state;
-
-    // Hello World
+    const {
+      inputName,
+      produtosInput,
+    } = this.state;
     return (
       <div>
         <h4 data-testid="home-initial-message">
@@ -93,22 +68,7 @@ class Home extends Component {
           />
         </Link>
 
-        {categories.map(({ id, name }) => (
-          <div key={ id }>
-            <label htmlFor={ id } data-testid="category">
-              <input
-                id={ id }
-                name="inputCategory"
-                value={ name }
-                type="radio"
-                onClick={ this.getCategoria }
-              />
-              {name}
-            </label>
-          </div>
-        ))}
-
-        <Category handle={ this.handleCategory } />
+        <Category handleCategory={ this.handleCategory } />
 
         {// title,thumbnail, price
           produtosInput.length === 0
@@ -130,13 +90,3 @@ class Home extends Component {
 }
 
 export default Home;
-/* {
-          produtosInput.map((elemento) => (
-            <div key={ elemento }>
-              {
-                elemento
-              }
-
-            </div>
-          ))
-        } */
