@@ -13,7 +13,7 @@ class Home extends Component {
     };
   }
 
-  // pesquisa pelo nome na api
+  // pesquisa pelo nome na api.
   getPesquisar = async () => {
     const { inputName } = this.state;
     const products = await api.getProductsByQuery(inputName);
