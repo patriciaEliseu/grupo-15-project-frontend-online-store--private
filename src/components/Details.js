@@ -10,7 +10,6 @@ class Details extends React.Component {
       thumbnail: '',
       price: '',
       attributes: [],
-
     };
   }
 
