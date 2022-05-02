@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as api from '../services/api';
+import { addProduto } from '../services/localStorage';
 
 class Details extends React.Component {
   constructor() {
@@ -10,7 +12,6 @@ class Details extends React.Component {
       thumbnail: '',
       price: '',
       attributes: [],
-
     };
   }
 
@@ -19,7 +20,7 @@ class Details extends React.Component {
   }
 
   handleCategory = async () => {
-    const { match: { params: { id } } } = this.props;
+    const { match: { params: { id } } } = this.props; // desconstrucao para acessar o id
     const products = await api.getProductsByProduct(id);
     const { title, thumbnail, price, attributes } = products;
     this.setState({
@@ -27,14 +28,30 @@ class Details extends React.Component {
       thumbnail,
       price,
       attributes,
+      products,
     });
   }
+
+  adicionarProduto = async () => {
+    const { products } = this.state;
+    addProduto(products); // addProduto adiciona no LocalStorage
+  };
 
   render() {
     const { title, thumbnail, price, attributes } = this.state;
 
     return (
       <div data-testid="product-detail-name">
+        <Link
+          to="/shoppingcart"
+          data-testid="shopping-cart-button"
+        >
+          <img
+            className="shoppingcart"
+            src="https://svgsilh.com/svg/155226.svg"
+            alt="carrinho-de-compras"
+          />
+        </Link>
         <h4>
           {title}
         </h4>
@@ -61,6 +78,15 @@ class Details extends React.Component {
               ))
             }
           </ul>
+        </div>
+        <div>
+          <button
+            data-testid="product-detail-add-to-cart"
+            type="submit"
+            onClick={ this.adicionarProduto }
+          >
+            Adicionar ao carrinho
+          </button>
         </div>
       </div>
     );
