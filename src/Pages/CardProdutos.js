@@ -3,8 +3,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { addProduto } from '../services/localStorage';
 
 class CardProdutos extends Component {
+  adicionarProduto = () => {
+    const { elemento } = this.props;
+    addProduto(elemento);
+  };
+
+  // resultado[elemento1.location].push({ [elemento1.name]: buscando });
+  // const readFavoriteSongs = () => JSON.parse(localStorage.getItem(PRODUTOS));
+
   render() {
     const { title, thumbnail, price, keyNumber } = this.props;
     return (
@@ -24,6 +33,13 @@ class CardProdutos extends Component {
         <div>
           {price}
         </div>
+        <button
+          data-testid="product-add-to-cart"
+          type="submit"
+          onClick={ this.adicionarProduto }
+        >
+          Adicionar ao carrinho
+        </button>
       </div>
     );
   }
