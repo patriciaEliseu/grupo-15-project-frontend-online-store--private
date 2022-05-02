@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import * as api from '../services/api';
 
 class Details extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       title: '',
       thumbnail: '',
