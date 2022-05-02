@@ -31,6 +31,8 @@ class CardProdutos extends Component {
           />
         </Link>
         <div>
+          R$
+          {' '}
           {price}
         </div>
         <button
