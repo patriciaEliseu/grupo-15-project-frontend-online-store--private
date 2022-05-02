@@ -76,14 +76,15 @@ class Home extends Component {
         {// title,thumbnail, price
           produtosInput.length === 0
             ? <div> Nenhum produto foi encontrado </div>
-            : produtosInput.map(({ title, thumbnail, price, id }, index) => (
+            : produtosInput.map((element, index) => (
 
               <CardProdutos
                 key={ index }
-                keyNumber={ id }
-                title={ title }
-                thumbnail={ thumbnail }
-                price={ price }
+                keyNumber={ element.id }
+                title={ element.title }
+                thumbnail={ element.thumbnail }
+                price={ element.price }
+                elemento={ element }
               />
             ))
         }
