@@ -1,7 +1,7 @@
 const PRODUTOS = 'Produtos';
 
-if (!JSON.parse(localStorage.getItem(PRODUTOS))) {
-  localStorage.setItem(PRODUTOS, JSON.stringify([]));
+if (!JSON.parse(localStorage.getItem(PRODUTOS))) { // Verificando se existe a key Produtos
+  localStorage.setItem(PRODUTOS, JSON.stringify([])); // Cria a key Produtos com o array vazio
 }
 const readFavoriteProduto = () => JSON.parse(localStorage.getItem(PRODUTOS));
 
