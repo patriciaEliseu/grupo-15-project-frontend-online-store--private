@@ -76,7 +76,7 @@ class ShoppingCart extends Component {
       </div>
     );
 
-    // recebe ids dos produtos
+    /* // recebe ids dos produtos
     const newArr = [];
     strgProdutcs.forEach((element) => {
       newArr.push(element.id);
@@ -98,7 +98,7 @@ class ShoppingCart extends Component {
       });
     });
     console.log('Test', test2);
-    console.log('test3', test3);
+    console.log('test3', test3); */
 
     return (
       <div>
