@@ -34,6 +34,5 @@ export const addProduto = (produto) /* => new Promise((resolve) */ => {
 };
 
 export const removeProduto = (produto) /* => new Promise((resolve) */ => {
-  const favoriteProduto = readFavoriteProduto();
-  saveFavoriteProduto(favoriteProduto.filter((s) => s.trackId !== produto.trackId));
+  saveFavoriteProduto(produto);
 };
