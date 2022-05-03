@@ -48,13 +48,15 @@ export const removeProduto = (produto) /* => new Promise((resolve) */ => {
   saveFavoriteProduto(produto);
 };
 
-/* _____ */
+/* __ API AVALIAÇÃO __ */
 
+// leitura
 export const getAvaliacaoProduto = () /* => new Promise((resolve) */ => {
   const avaliacaoProduto = readAvaliacaoProduto();
   return avaliacaoProduto;
 };
 
+// escrita
 export const addAvaliacao = (avaliacao) /* => new Promise((resolve) */ => {
   if (avaliacao) {
     const avaliacaoProduto = readAvaliacaoProduto();
