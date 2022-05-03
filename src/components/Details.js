@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as api from '../services/api';
-import { addProduto } from '../services/localStorage';
+import { addProduto, addAvaliacao, getAvaliacaoProduto } from '../services/localStorage';
 
 class Details extends React.Component {
   constructor() {
@@ -49,15 +49,18 @@ class Details extends React.Component {
     });
   }
 
-  avaliacao = () => {
+  avaliacao = (e) => {
+    e.preventDefault();
     const { email, textarea, radio } = this.state;
     const avalia = { email, textarea, radio };
-    localStorage.setItem('chaveAvalicao', JSON.stringify(avalia)); // de obj para string
+    addAvaliacao(avalia);
+    // localStorage.setItem('chaveAvalicao', JSON.stringify(avalia)); // de obj para string
     this.recuperaDoStorage();
   }
 
   recuperaDoStorage = () => {
-    const recuperaDados = JSON.parse(localStorage.getItem('chaveAvalicao')) || []; // de string para objeto
+    // const recuperaDados = JSON.parse(localStorage.getItem('chaveAvalicao')) || []; // de string para objeto
+    const recuperaDados = getAvaliacaoProduto();
     this.setState({
       recuperaDados,
     });
@@ -73,8 +76,8 @@ class Details extends React.Component {
       textarea,
       recuperaDados,
     } = this.state;
-
-    const dadosAvaliacao = [recuperaDados];
+    console.log(recuperaDados);
+    // const dadosAvaliacao = [recuperaDados];
 
     return (
       <div data-testid="product-detail-name">
@@ -179,27 +182,26 @@ class Details extends React.Component {
           </label>
           <div>
             <label htmlFor="product-detail-evaluation">
-              <textarea
+              <input
+                id="product-detail-evaluation"
                 data-testid="product-detail-evaluation"
-                type="textarea"
+                type="text"
                 value={ textarea }
                 name="textarea"
                 onChange={ this.formulario }
               />
             </label>
           </div>
-          <labe htmlFor="submit-review-btn">
-            <button
-              data-testid="submit-review-btn"
-              type="submit"
-              onClick={ this.avaliacao }
-            >
-              Avaliar
-            </button>
-          </labe>
+          <button
+            data-testid="submit-review-btn"
+            type="submit"
+            onClick={ this.avaliacao }
+          >
+            Avaliar
+          </button>
         </form>
         <div>
-          {dadosAvaliacao.map((element, index) => (
+          {recuperaDados.map((element, index) => (
             <div key={ index }>
               <p>{ element.email }</p>
               <p>{ element.radio }</p>
