@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -12,11 +13,16 @@ class Details extends React.Component {
       thumbnail: '',
       price: '',
       attributes: [],
+      email: '',
+      radio: '',
+      textarea: '',
+      recuperaDados: [],
     };
   }
 
   componentDidMount() {
     this.handleCategory();
+    this.recuperaDoStorage();
   }
 
   handleCategory = async () => {
@@ -37,8 +43,39 @@ class Details extends React.Component {
     addProduto(products); // addProduto adiciona no LocalStorage
   };
 
+  formulario = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  avaliacao = () => {
+    const { email, textarea, radio } = this.state;
+    const avalia = { email, textarea, radio };
+    localStorage.setItem('chaveAvalicao', JSON.stringify(avalia)); // de obj para string
+    this.recuperaDoStorage();
+  }
+
+  recuperaDoStorage = () => {
+    const recuperaDados = JSON.parse(localStorage.getItem('chaveAvalicao')) || []; // de string para objeto
+    this.setState({
+      recuperaDados,
+    });
+  }
+
   render() {
-    const { title, thumbnail, price, attributes } = this.state;
+    const {
+      title,
+      thumbnail,
+      price,
+      attributes,
+      email,
+      textarea,
+      recuperaDados,
+    } = this.state;
+
+    const dadosAvaliacao = [recuperaDados];
 
     return (
       <div data-testid="product-detail-name">
@@ -87,6 +124,89 @@ class Details extends React.Component {
           >
             Adicionar ao carrinho
           </button>
+        </div>
+        <form>
+          <label htmlFor="email">
+            Email
+            <input
+              data-testid="product-detail-email"
+              type="email"
+              value={ email }
+              name="email"
+              onChange={ this.formulario }
+            />
+          </label>
+          <label htmlFor="rating">
+            <input
+              type="radio"
+              value="1"
+              name="radio"
+              data-testid="1-rating"
+              onChange={ this.formulario }
+            />
+            1
+            <input
+              type="radio"
+              value="2"
+              name="radio"
+              data-testid="2-rating"
+              onChange={ this.formulario }
+            />
+            2
+            <input
+              type="radio"
+              value="3"
+              name="radio"
+              data-testid="3-rating"
+              onChange={ this.formulario }
+            />
+            3
+            <input
+              type="radio"
+              value="4"
+              name="radio"
+              data-testid="4-rating"
+              onChange={ this.formulario }
+            />
+            4
+            <input
+              type="radio"
+              value="5"
+              name="radio"
+              data-testid="5-rating"
+              onChange={ this.formulario }
+            />
+            5
+          </label>
+          <div>
+            <label htmlFor="product-detail-evaluation">
+              <textarea
+                data-testid="product-detail-evaluation"
+                type="textarea"
+                value={ textarea }
+                name="textarea"
+                onChange={ this.formulario }
+              />
+            </label>
+          </div>
+          <labe htmlFor="submit-review-btn">
+            <button
+              data-testid="submit-review-btn"
+              type="submit"
+              onClick={ this.avaliacao }
+            >
+              Avaliar
+            </button>
+          </labe>
+        </form>
+        <div>
+          {dadosAvaliacao.map((element, index) => (
+            <div key={ index }>
+              <p>{ element.email }</p>
+              <p>{ element.radio }</p>
+              <p>{ element.textarea }</p>
+            </div>
+          ))}
         </div>
       </div>
     );
